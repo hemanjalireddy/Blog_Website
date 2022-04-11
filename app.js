@@ -21,16 +21,72 @@ app.get("/",function(req,res){
 
 });
 
+// Get all blogs
+var axios = require('axios');
+
+var config = {
+  method: 'get',
+  url: 'https://adg-rec-task.herokuapp.com/',
+  headers: { }
+};
+
+axios(config)
+.then(function (response) {
+  console.log(JSON.stringify(response.data));
+
+  response.on("data", function(data){
+    const Data= JSON.parse(data)
+    const id= Data._id
+    const title= Data.title
+    const details = Data.details
+    const author = Data.author
+
+    res.setHeader("Content-Type", "text/html");
+    res.write(id)
+    res.write(title)
+    res.write(details)
+    res.write(author)
+    res.send()
+})
+.catch(function (error) {
+  console.log(error);
+});
 
 
+// Get blog by id
 
+var axios = require('axios');
 
+var config = {
+  method: 'get',
+  url: 'https://adg-rec-task.herokuapp.com/getBlog/624c6e505f149bf0b41076d5',
+  headers: { }
+};
 
+axios(config)
+.then(function (response) {
+  console.log(JSON.stringify(response.data));
 
+  response.on("data", function(data){
+    const Data= JSON.parse(data)
+    const id= Data._id
+    const title= Data.title
+    const details = Data.details
+    const author = Data.author
 
+    res.setHeader("Content-Type", "text/html");
+    res.write(id)
+    res.write(title)
+    res.write(details)
+    res.write(author)
+    res.send()
+})
+.catch(function (error) {
+  console.log(error);
+});
 
 
 
 app.listen(3000, function() {
   console.log("Server started on port 3000");
-});
+})
